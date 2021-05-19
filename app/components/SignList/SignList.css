@@ -1,0 +1,18 @@
+.sign-list__header {
+    display: inline-flex;
+    align-items: center;
+}
+.sign-list__item--address { 
+    display: inline-flex;
+}
+.sign-list__item {
+   padding: 16px 24px;
+    border-bottom: 1px solid #d1d5da;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.sign-list__item--address-wallet {
+    margin-left: 5px;
+}

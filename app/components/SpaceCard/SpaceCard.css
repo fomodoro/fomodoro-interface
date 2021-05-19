@@ -1,0 +1,18 @@
+.space-card {
+ border: 1px solid #d1d5da;
+ border-radius: 10px;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ padding: 24px;
+ background-color: white;
+ width: 220px;
+ cursor: pointer;
+}
+.space-card__image {
+    width: 98px;
+    height: 98px;
+    border-radius: 50%!important;
+    border: 1px solid #e1e4e8!important;
+}

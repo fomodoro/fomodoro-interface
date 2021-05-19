@@ -1,0 +1,10 @@
+.vote-list__body {
+    padding: 12px;
+}
+.vote-list__item {
+    margin-bottom: 10px;
+}
+
+.vote-list__item-vote {
+    margin-top: 20px;
+}

@@ -1,0 +1,19 @@
+.table-list {
+    border: 1px solid #d1d5da;
+    border-radius: 10px;
+   
+}
+
+.table-list__header {
+    background-color: white;
+    border-radius: 10px;
+     padding: 16px 24px 12px;
+}
+
+.table-list__body {
+    border-top: 1px solid #d1d5da;
+}
+
+.padding-body {
+    padding: 16px 24px 12px;
+}

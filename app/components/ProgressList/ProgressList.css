@@ -1,0 +1,10 @@
+.progress-list__item {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+    
+}
+
+.progress-list__item-wrapper {
+    padding: 8px 12px;
+}
