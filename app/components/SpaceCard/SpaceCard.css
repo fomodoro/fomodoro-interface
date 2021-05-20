@@ -9,6 +9,7 @@
  background-color: white;
  width: 220px;
  cursor: pointer;
+ margin-bottom: 20px;
 }
 .space-card__image {
     width: 98px;

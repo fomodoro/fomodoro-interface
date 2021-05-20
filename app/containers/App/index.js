@@ -14,13 +14,15 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import SpacePage from 'containers/SpacePage/Loadable';
+import ProposalPage from 'containers/ProposalPage/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 
 import GlobalStyle from '../../global-styles';
 
 const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
+  max-width: 80vw;
   margin: 0 auto;
   display: flex;
   min-height: 100%;
@@ -40,10 +42,11 @@ export default function App() {
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/features" component={FeaturePage} />
+        <Route exact path="/space" component={SpacePage} />
+        <Route exact path="/space/proposal" component={ProposalPage} />
         <Route path="" component={NotFoundPage} />
       </Switch>
-      <Footer />
+
       <GlobalStyle />
     </AppWrapper>
   );

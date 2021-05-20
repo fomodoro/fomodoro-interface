@@ -1,0 +1,10 @@
+
+.proposal-page {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.proposal-page__wrapper {
+    max-width: calc(1100px + 16px * 2);
+    
+}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { Heading } from 'rimble-ui';
 import A from './A';
 import Img from './Img';
 import NavBar from './NavBar';
@@ -9,6 +8,7 @@ import HeaderLink from './HeaderLink';
 import Banner from './banner.jpg';
 import messages from './messages';
 import ConnectButton from '../ConnectButton/index';
+import { Heading } from 'rimble-ui';
 import './header.css';
 import SpaceCard from '../SpaceCard/index';
 import UsualButton from '../UsualButton/index';
@@ -17,7 +17,7 @@ import TableList from '../TableList/index';
 import VoteList from '../VoteList/index';
 import SignList from '../SignList/index';
 import ProgressList from '../ProgressList/index';
-import AddChoice from '../AddChoice/index';
+import { Divider } from 'antd';
 
 function Header() {
   const cardProps = {
@@ -107,13 +107,13 @@ function Header() {
         <Heading>Fomodoro</Heading>
         <ConnectButton />
       </div>
-      <SpaceCard {...cardProps} />
+      <Divider />
+      {/* <SpaceCard {...cardProps} />
       <UsualButton text="TEST" width={50} />
       <ProposalList list={list} />
       <VoteList voteList={voteList} />
       <SignList userList={userList} />
-      <ProgressList progressList={progressList} />
-      <AddChoice />
+      <ProgressList progressList={progressList} />> */}
     </>
   );
 }
