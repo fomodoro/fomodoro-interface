@@ -5,6 +5,8 @@ import ProposalList from '../../components/ProposalList/index';
 import UsualButton from '../../components/UsualButton/index';
 import { Row, Col, Input } from 'antd';
 import { Heading } from 'rimble-ui';
+
+import { Link } from 'react-router-dom';
 import './SpacePage.css';
 
 function HomePage() {
@@ -37,7 +39,14 @@ function HomePage() {
             <Heading as={'h4'}>Balancer</Heading>
             <Heading as={'h2'}>Proposal</Heading>
           </div>
-          <UsualButton text="NEW PROPOSAL" width="200" />
+
+          <Link to="/space/proposal/create">
+            <UsualButton
+              text="NEW PROPOSAL"
+              width="200"
+              // onClick={() => history.push('/home')}
+            />
+          </Link>
         </Row>
         <Row />
         <ProposalList list={list} />

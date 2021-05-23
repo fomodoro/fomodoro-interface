@@ -8,6 +8,7 @@ import UsualButton from '../../components/UsualButton/index';
 import { Row, Col, Input } from 'antd';
 import { Heading, Pill } from 'rimble-ui';
 import './ProposalPage.css';
+import { Link } from 'react-router-dom';
 
 function ProposalPage() {
   const list = [

@@ -5,6 +5,7 @@ import SpaceCard from '../../components/SpaceCard/index';
 import UsualButton from '../../components/UsualButton/index';
 import { Row, Col, Input } from 'antd';
 import './Homepage.css';
+import { Link } from 'react-router-dom';
 
 function HomePage() {
   const cardList = [
@@ -117,9 +118,11 @@ function HomePage() {
         {cardList.map((item, index) => {
           return (
             <>
-              <Col span={6} xxl={4} key={index}>
-                <SpaceCard {...item} />
-              </Col>
+              <Link to="/space">
+                <Col span={6} xxl={4} key={index}>
+                  <SpaceCard {...item} />
+                </Col>
+              </Link>
             </>
           );
         })}
