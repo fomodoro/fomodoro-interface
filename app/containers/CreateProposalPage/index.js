@@ -53,44 +53,6 @@ function CreateProposalPage() {
     setListChoice(fixList);
   };
 
-  // Broken code pls fix it
-  // const loadWeb3 = async () => {
-  //   if (window.ethereum) {
-  //     window.web3 = new Web3(window.ethereum);
-  //     await window.ethereum.enable();
-  //   } else if (window.web3) {
-  //     window.web3 = new Web3(window.web3.currentProvider);
-  //   } else {
-  //     window.alert(
-  //       'Non-Ethereum browser detected. You should consider trying MetaMask!',
-  //     );
-  //   }
-  // };
-
-  // const loadBlockchainData = async () => {
-  //   const web3 = window.web3;
-  //   // Load account
-  //   const accounts = await web3.eth.getAccounts();
-  //   setState({ account: accounts[0] });
-
-  //   const networkId = await web3.eth.net.getId();
-  //   const networkData = Governance.networks[networkId];
-  //   if (networkData) {
-  //     const contract = new web3.eth.Contract(
-  //       Governance.abi,
-  //       networkData.address,
-  //     );
-  //     setState({ contract });
-  //   } else {
-  //     window.alert('Smart contract not deployed to detected network.');
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   loadWeb3();
-  //   loadBlockchainData;
-  // }, []);
-
   const createProposal = async values => {
     console.log('Submitting file to ipfs...');
     const test = listChoice.map((item, index) => values[`add-choice-${index}`]);

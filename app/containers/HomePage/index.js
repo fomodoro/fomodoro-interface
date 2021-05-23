@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import ContractContext from 'context/ContractContext';
 import { FormattedMessage } from 'react-intl';
 
 import SpaceCard from '../../components/SpaceCard/index';
@@ -6,103 +7,38 @@ import UsualButton from '../../components/UsualButton/index';
 import { Row, Col, Input } from 'antd';
 import './Homepage.css';
 import { Link } from 'react-router-dom';
+import web3 from 'web3';
 
 function HomePage() {
-  const cardList = [
-    {
-      image:
-        'https://raw.githubusercontent.com/snapshot-labs/snapshot-spaces/master/spaces/balancer/space.png',
-      name: 'Balancer',
-      tokenName: 'BAL',
-      noti: 1,
-      isFavorite: true,
-      id: 1,
-    },
-    {
-      image:
-        'https://raw.githubusercontent.com/snapshot-labs/snapshot-spaces/master/spaces/balancer/space.png',
-      name: 'Balancer',
-      tokenName: 'BAL',
-      noti: 1,
-      isFavorite: true,
-      id: 2,
-    },
+  const [cardList, setCardList] = useState([]);
+  const { governance } = useContext(ContractContext);
 
-    {
-      image:
-        'https://raw.githubusercontent.com/snapshot-labs/snapshot-spaces/master/spaces/balancer/space.png',
-      name: 'Balancer',
-      tokenName: 'BAL',
-      noti: 1,
-      isFavorite: true,
-      id: 3,
-    },
-    {
-      image:
-        'https://raw.githubusercontent.com/snapshot-labs/snapshot-spaces/master/spaces/balancer/space.png',
-      name: 'Balancer',
-      tokenName: 'BAL',
-      noti: 1,
-      isFavorite: true,
-      id: 4,
-    },
-    {
-      image:
-        'https://raw.githubusercontent.com/snapshot-labs/snapshot-spaces/master/spaces/balancer/space.png',
-      name: 'Balancer',
-      tokenName: 'BAL',
-      noti: 1,
-      isFavorite: true,
-      id: 12,
-    },
+  useEffect(() => {
+    fetchSpaces();
+  }, []);
 
-    {
-      image:
-        'https://raw.githubusercontent.com/snapshot-labs/snapshot-spaces/master/spaces/balancer/space.png',
-      name: 'Balancer',
-      tokenName: 'BAL',
-      noti: 1,
-      isFavorite: true,
-      id: 13,
-    },
-    {
-      image:
-        'https://raw.githubusercontent.com/snapshot-labs/snapshot-spaces/master/spaces/balancer/space.png',
-      name: 'Balancer',
-      tokenName: 'BAL',
-      noti: 1,
-      isFavorite: true,
-      id: 14,
-    },
-    {
-      image:
-        'https://raw.githubusercontent.com/snapshot-labs/snapshot-spaces/master/spaces/balancer/space.png',
-      name: 'Balancer',
-      tokenName: 'BAL',
-      noti: 1,
-      isFavorite: true,
-      id: 22,
-    },
 
-    {
-      image:
-        'https://raw.githubusercontent.com/snapshot-labs/snapshot-spaces/master/spaces/balancer/space.png',
-      name: 'Balancer',
-      tokenName: 'BAL',
-      noti: 1,
-      isFavorite: true,
-      id: 23,
-    },
-    {
-      image:
-        'https://raw.githubusercontent.com/snapshot-labs/snapshot-spaces/master/spaces/balancer/space.png',
-      name: 'Balancer',
-      tokenName: 'BAL',
-      noti: 1,
-      isFavorite: true,
-      id: 24,
-    },
-  ];
+  const fetchSpaces = async () => {
+      let spaces = await governance.methods.getAllSpaces().call();
+      let cards = [];
+      for (const spaceId of spaces) {
+        const space = await governance.methods.getSpace(spaceId).call();
+        const card = {
+          image: 'https://raw.githubusercontent.com/snapshot-labs/snapshot-spaces/master/spaces/balancer/space.png',
+          name: web3.utils.toAscii(space.name),
+          tokenName: web3.utils.toAscii(space.symbol),
+          noti: 1,
+          isFavorite: true,
+          id: 1,
+        };
+        cards = [...cards, card];
+      }
+      setCardList(cards);
+  }
+
+  const fetchSpace = async (id) => {
+    let space
+  }
 
   return (
     <>

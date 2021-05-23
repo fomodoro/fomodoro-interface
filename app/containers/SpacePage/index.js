@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import './SpacePage.css';
 
 function HomePage() {
+  const [state, setState] = useState({});
+
   const list = [
     {
       id: 1,
