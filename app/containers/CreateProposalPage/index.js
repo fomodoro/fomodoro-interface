@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import ProposalList from '../../components/ProposalList/index';
@@ -14,6 +14,7 @@ import fleek from '@fleekhq/fleek-storage-js';
 function CreateProposalPage() {
   const [form] = Form.useForm();
   const [listChoice, setListChoice] = useState(['', '', '']);
+  const [state, setState] = useState({});
   const list = [
     {
       id: 1,
@@ -69,7 +70,8 @@ function CreateProposalPage() {
     const web3 = window.web3;
     // Load account
     const accounts = await web3.eth.getAccounts();
-    this.setState({ account: accounts[0] });
+    setState({ account: accounts[0] });
+
     const networkId = await web3.eth.net.getId();
     const networkData = Governance.networks[networkId];
     if (networkData) {
@@ -77,28 +79,35 @@ function CreateProposalPage() {
         Governance.abi,
         networkData.address,
       );
-      this.setState({ contract });
+      setState({ contract });
     } else {
       window.alert('Smart contract not deployed to detected network.');
     }
   };
 
-  const createProposal = async () => {
+  useEffect(() => {
+    loadWeb3();
+    loadBlockchainData;
+  }, []);
+
+  const createProposal = async values => {
     console.log('Submitting file to ipfs...');
+    const test = listChoice.map((item, index) => values[`add-choice-${index}`]);
+    const submitValue = {
+      startTime: values.dateStart,
+      endTime: values.dateEnd,
+      description: values.description,
+      title: values.question,
+      blockNumber: '',
+      choices: test,
+    };
     let id = Web3.utils.randomHex(32);
 
     let detail = JSON.stringify({
-      creator: this.state.account,
+      creator: state.account,
       version: '1.0.0',
       type: 'proposal',
-      proposal: {
-        title: this.state.title,
-        description: this.state.desc,
-        startTime: this.state.startTime,
-        endTime: this.state.endTime,
-        blockNumber: this.state.blockNumber,
-        choices: this.state.choices,
-      },
+      proposal: submitValue,
     });
 
     let input = {
@@ -110,19 +119,19 @@ function CreateProposalPage() {
 
     const result = await fleek.upload(input);
     console.log('Ipfs result', result);
-    this.state.contract.methods
+    state.contract.methods
       .newProposal(
-        Web3.utils.asciiToHex(this.state.spaceKey),
+        Web3.utils.asciiToHex(state.spaceKey),
         id,
         Web3.utils.asciiToHex(result.hash),
-        this.state.startTime,
-        this.state.endTime,
-        this.state.blockNumber,
-        this.state.choices.length,
+        state.startTime,
+        state.endTime,
+        state.blockNumber,
+        state.choices.length,
       )
-      .send({ from: this.state.account })
+      .send({ from: state.account })
       .then(r => {
-        return this.setState({ hash: result.hash });
+        return setState({ hash: result.hash });
       });
   };
 
@@ -133,7 +142,7 @@ function CreateProposalPage() {
           form={form}
           layout={'vertical'}
           name="control-hooks"
-          onFinish={values => console.log(values)}
+          onFinish={values => createProposal(values)}
         >
           <Row>
             <Col span={24} xxl={12}>
