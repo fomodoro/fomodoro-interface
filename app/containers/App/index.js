@@ -72,7 +72,7 @@ export default function App() {
 
   useEffect(() => {
     loadWeb3();
-    loadBlockchainData;
+    loadBlockchainData();
   }, []);
 
   return (

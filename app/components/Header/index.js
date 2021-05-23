@@ -20,6 +20,8 @@ import ProgressList from '../ProgressList/index';
 import { Divider } from 'antd';
 
 function Header() {
+  const account = localStorage.getItem('account');
+  // console.log('t', account);
   const cardProps = {
     image:
       'https://raw.githubusercontent.com/snapshot-labs/snapshot-spaces/master/spaces/balancer/space.png',
@@ -105,7 +107,7 @@ function Header() {
     <>
       <div className="header">
         <Heading>Fomodoro</Heading>
-        <ConnectButton />
+        <ConnectButton walletAddress={account} />
       </div>
       <Divider />
       {/* <SpaceCard {...cardProps} />
