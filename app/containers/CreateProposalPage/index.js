@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import ProposalList from '../../components/ProposalList/index';
@@ -10,12 +10,14 @@ import { CloseOutlined } from '@ant-design/icons';
 import UsualButton from '../../components/UsualButton/index';
 import Web3 from 'web3';
 import fleek from '@fleekhq/fleek-storage-js';
+import ContractContext from 'context/ContractContext';
+import moment from 'moment';
 
 function CreateProposalPage() {
   const [form] = Form.useForm();
   const [listChoice, setListChoice] = useState(['', '', '']);
   const [state, setState] = useState({});
-  const account = localStorage.getItem('account');
+  const { account, governance } = useContext(ContractContext);
   const list = [
     {
       id: 1,
@@ -61,10 +63,11 @@ function CreateProposalPage() {
       endTime: values.dateEnd,
       description: values.description,
       title: values.question,
-      blockNumber: '',
+      blockNumber: 123,
       choices: test,
     };
     let id = Web3.utils.randomHex(32);
+    console.log('---id---', id);
 
     let detail = JSON.stringify({
       creator: account,
@@ -82,19 +85,20 @@ function CreateProposalPage() {
 
     const result = await fleek.upload(input);
     console.log('Ipfs result', result);
-    state.contract.methods
+    governance.methods
       .newProposal(
-        Web3.utils.asciiToHex(state.spaceKey),
+        '0x69b91f4c1ad95e9b94a3cbc6ba0c5ec55694d72c70fb2a7638ff99325973882c',
         id,
         Web3.utils.asciiToHex(result.hash),
-        state.startTime,
-        state.endTime,
-        state.blockNumber,
-        state.choices.length,
+        moment(values.dateStart).unix(),
+        moment(values.dateEnd).unix(),
+        123,
+        test.length,
       )
-      .send({ from: state.account })
+      .send({ from: account })
       .then(r => {
-        return setState({ hash: result.hash });
+        console.log('r:', r);
+        console.log('hash:', result.hash);
       });
   };
 
