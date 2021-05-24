@@ -36,10 +36,6 @@ function HomePage() {
       setCardList(cards);
   }
 
-  const fetchSpace = async (id) => {
-    let space
-  }
-
   return (
     <>
       <Row justify="space-between">
@@ -47,7 +43,9 @@ function HomePage() {
           placeholder="Search Space"
           style={{ width: 30, borderRadius: 40, width: 300 }}
         />
-        <UsualButton text="CREATE SPACE" width={200} />
+        <Link to="/space/create">
+          <UsualButton text="CREATE SPACE" width={200} />
+        </Link>
       </Row>
 
       <Row className="home-page-wrapper">

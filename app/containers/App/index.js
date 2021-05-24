@@ -16,6 +16,7 @@ import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import SpacePage from 'containers/SpacePage/Loadable';
 import ProposalPage from 'containers/ProposalPage/Loadable';
+import CreateSpacePage from 'containers/CreateSpacePage/Loadable';
 import CreateProposalPage from 'containers/CreateProposalPage/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
@@ -97,6 +98,7 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/space" component={SpacePage} />
+          <Route exact path="/space/create" component={CreateSpacePage} />
           <Route exact path="/space/proposal" component={ProposalPage} />
           <Route
             exact
