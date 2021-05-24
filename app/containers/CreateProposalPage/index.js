@@ -13,7 +13,7 @@ import fleek from '@fleekhq/fleek-storage-js';
 import ContractContext from 'context/ContractContext';
 import moment from 'moment';
 
-function CreateProposalPage() {
+function CreateProposalPage(props) {
   const [form] = Form.useForm();
   const [listChoice, setListChoice] = useState(['', '', '']);
   const [state, setState] = useState({});
@@ -56,7 +56,6 @@ function CreateProposalPage() {
   };
 
   const createProposal = async values => {
-    console.log('Submitting file to ipfs...');
     const test = listChoice.map((item, index) => values[`add-choice-${index}`]);
     const submitValue = {
       startTime: values.dateStart,
@@ -67,7 +66,6 @@ function CreateProposalPage() {
       choices: test,
     };
     let id = Web3.utils.randomHex(32);
-    console.log('---id---', id);
 
     let detail = JSON.stringify({
       creator: account,
@@ -84,10 +82,10 @@ function CreateProposalPage() {
     };
 
     const result = await fleek.upload(input);
-    console.log('Ipfs result', result);
+    let spaceId = props.match.params.id;
     governance.methods
       .newProposal(
-        '0x69b91f4c1ad95e9b94a3cbc6ba0c5ec55694d72c70fb2a7638ff99325973882c',
+        spaceId,
         id,
         Web3.utils.asciiToHex(result.hash),
         moment(values.dateStart).unix(),

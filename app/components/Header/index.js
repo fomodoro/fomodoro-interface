@@ -19,13 +19,16 @@ import VoteList from '../VoteList/index';
 import SignList from '../SignList/index';
 import ProgressList from '../ProgressList/index';
 import { Divider } from 'antd';
+import { Link } from 'react-router-dom';
 
 function Header() {
   const {account} = useContext(ContractContext);
   return (
     <>
       <div className="header">
-        <Heading>Fomodoro</Heading>
+        <Link to='/'>
+          <Heading>Fomodoro</Heading>
+        </Link>
         <ConnectButton walletAddress={account} />
       </div>
       <Divider />

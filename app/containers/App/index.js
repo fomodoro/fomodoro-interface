@@ -12,21 +12,17 @@ import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
-import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import SpacePage from 'containers/SpacePage/Loadable';
 import ProposalPage from 'containers/ProposalPage/Loadable';
 import CreateSpacePage from 'containers/CreateSpacePage/Loadable';
 import CreateProposalPage from 'containers/CreateProposalPage/Loadable';
 import Header from 'components/Header';
-import Footer from 'components/Footer';
 import Web3 from 'web3';
-import fleek from '@fleekhq/fleek-storage-js';
 import Governance from 'contracts/Governance.json';
 import { ContractProvider } from 'context/ContractContext';
 
 import GlobalStyle from '../../global-styles';
-import ContractContext from '../../context/ContractContext';
 
 const AppWrapper = styled.div`
   max-width: 80vw;
@@ -97,12 +93,12 @@ export default function App() {
       <ContractProvider value={state}>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/space" component={SpacePage} />
-          <Route exact path="/space/create" component={CreateSpacePage} />
-          <Route exact path="/space/proposal" component={ProposalPage} />
+          <Route exact path="/space/:id" component={SpacePage} />
+          <Route exact path="/create-space" component={CreateSpacePage} />
+          <Route exact path="/space/proposal/:id" component={ProposalPage} />
           <Route
             exact
-            path="/space/proposal/create"
+            path="/space/:id/create-proposal"
             component={CreateProposalPage}
           />
           <Route path="" component={NotFoundPage} />

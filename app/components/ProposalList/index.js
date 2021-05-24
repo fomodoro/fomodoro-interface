@@ -13,7 +13,7 @@ const ProposalList = props => {
     <>
       {list &&
         list.map((item, index) => (
-          <Link to="/space/proposal">
+          <Link to={item.route}>
             <div className="proposal-list__item" key={index}>
               <div className="proposal-list__item--title">
                 {item.status === 'active' ? (

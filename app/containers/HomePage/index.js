@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import ContractContext from 'context/ContractContext';
-import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
+import web3 from 'web3';
+import { Row, Col, Input } from 'antd';
 
 import SpaceCard from '../../components/SpaceCard/index';
 import UsualButton from '../../components/UsualButton/index';
-import { Row, Col, Input } from 'antd';
 import './Homepage.css';
-import { Link } from 'react-router-dom';
-import web3 from 'web3';
+import spaceLogo from 'images/space.png';
 
 function HomePage() {
   const [cardList, setCardList] = useState([]);
@@ -24,12 +24,13 @@ function HomePage() {
       for (const spaceId of spaces) {
         const space = await governance.methods.getSpace(spaceId).call();
         const card = {
-          image: 'https://raw.githubusercontent.com/snapshot-labs/snapshot-spaces/master/spaces/balancer/space.png',
+          image: spaceLogo,
           name: web3.utils.toAscii(space.name),
           tokenName: web3.utils.toAscii(space.symbol),
           noti: 1,
           isFavorite: true,
-          id: 1,
+          id: spaceId,
+          route: `/space/${spaceId}`
         };
         cards = [...cards, card];
       }
@@ -43,7 +44,7 @@ function HomePage() {
           placeholder="Search Space"
           style={{ width: 30, borderRadius: 40, width: 300 }}
         />
-        <Link to="/space/create">
+        <Link to="/create-space">
           <UsualButton text="CREATE SPACE" width={200} />
         </Link>
       </Row>
@@ -52,8 +53,8 @@ function HomePage() {
         {cardList.map((item, index) => {
           return (
             <>
-              <Link to="/space">
-                <Col span={6} xxl={4} key={index}>
+              <Link to={item.route} key={index}>
+                <Col span={6} xxl={4}>
                   <SpaceCard {...item} />
                 </Col>
               </Link>
