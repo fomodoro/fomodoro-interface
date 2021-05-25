@@ -23,6 +23,10 @@ function HomePage() {
       let cards = [];
       for (const spaceId of spaces) {
         const space = await governance.methods.getSpace(spaceId).call();
+        const to = {
+          pathname: `/space/${spaceId}`,
+          state: { space: web3.utils.toAscii(space.name)}
+        }
         const card = {
           image: spaceLogo,
           name: web3.utils.toAscii(space.name),
@@ -30,7 +34,7 @@ function HomePage() {
           noti: 1,
           isFavorite: true,
           id: spaceId,
-          route: `/space/${spaceId}`
+          to: to,
         };
         cards = [...cards, card];
       }
@@ -53,7 +57,7 @@ function HomePage() {
         {cardList.map((item, index) => {
           return (
             <>
-              <Link to={item.route} key={index}>
+              <Link to={item.to} key={index}>
                 <Col span={6} xxl={4}>
                   <SpaceCard {...item} />
                 </Col>

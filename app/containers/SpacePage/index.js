@@ -13,8 +13,12 @@ import ContractContext from 'context/ContractContext';
 function HomePage(props) {
   const [list, setList] = useState([]);
   const { governance } = useContext(ContractContext);
-  let createProposalRoute = `/space/${props.match.params.id}/create-proposal`;
-
+  const space = props.location.state.space;
+  const to =  {
+    pathname: `/space/${props.match.params.id}/create-proposal`,
+    state: {space}
+  }
+  
   useEffect(() => {
     fetchProposals();
   }, []);
@@ -34,13 +38,27 @@ function HomePage(props) {
         const result = await fleek.get(input);
         const detail = await JSON.parse(result.data);
         const title = detail.proposal.title;
-        const startTime = detail.proposal.startTime;
-        const endTime = detail.proposal.endTime;
+        const startTime = moment(detail.proposal.startTime);
+        const endTime = moment(detail.proposal.endTime);
+        const now = moment();
+        let status = 'pending';
+        let description = `Start ${startTime.fromNow()}`;
+
+        if (endTime.isBefore(now)) {
+          status = 'closed';
+          description = `End ${endTime.fromNow()}`;
+        }
+
+        if (startTime.isBefore(now) && endTime.isAfter(now)) {
+          status = 'active'
+          description = `End ${endTime.fromNow()}`;
+        }
+
         const item = {
           id: proposalId,
-          status: 'closed',
+          status: status,
           title: title,
-          description: 'End in 6 month',
+          description: description,
           route: `/space/proposal/${proposalId}`
         };
         proposalList = [...proposalList, item];
@@ -53,11 +71,11 @@ function HomePage(props) {
       <div className="space-page">
         <Row justify="space-between" style={{ margin: 20 }}>
           <div className="space-page__title">
-            <Heading as={'h4'}>Balancer</Heading>
+            <Heading as={'h4'}>{space}</Heading>
             <Heading as={'h2'}>Proposal</Heading>
           </div>
 
-          <Link to={createProposalRoute}>
+          <Link to={to}>
             <UsualButton
               text="NEW PROPOSAL"
               width="200"

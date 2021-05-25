@@ -1,20 +1,21 @@
 import React from 'react';
 import { Pill, Heading } from 'rimble-ui';
+import { Link } from 'react-router-dom';
+
 import TableList from '../TableList/index';
 import './ProposalList.css';
-import { Link } from 'react-router-dom';
 
 const ProposalList = props => {
   const { list } = props;
   const ProposalListHeader = () => (
-    <div className="proposal-list__header">Active</div>
+    <div className="proposal-list__header">Propoposal list</div>
   );
   const ProposalListBody = () => (
     <>
       {list &&
         list.map((item, index) => (
-          <Link to={item.route}>
-            <div className="proposal-list__item" key={index}>
+          <Link to={item.route} key={index}>
+            <div className="proposal-list__item">
               <div className="proposal-list__item--title">
                 {item.status === 'active' ? (
                   <Pill color="green">Active</Pill>

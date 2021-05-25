@@ -10,7 +10,6 @@ function CreateProposalPage() {
   const [form] = Form.useForm();
   const { account, governance } = useContext(ContractContext);
   const [created, setCreated] = useState(false);
-  // let history = useHistory();
 
   const layout = {
     labelCol: { span: 8 },
@@ -75,7 +74,7 @@ function CreateProposalPage() {
               <Form.Item
                 layout={layout}
                 name="strategy"
-                label="Strategy address"
+                label="The strategy address (put empty for default strategy)"
                 rules={[{ required: false }]}
                 placeholder={'The strategy address (put empty if you want to use default strategy)'}
               >

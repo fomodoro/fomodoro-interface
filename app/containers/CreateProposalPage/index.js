@@ -12,41 +12,22 @@ import Web3 from 'web3';
 import fleek from '@fleekhq/fleek-storage-js';
 import ContractContext from 'context/ContractContext';
 import moment from 'moment';
+import { Redirect } from 'react-router';
 
 function CreateProposalPage(props) {
   const [form] = Form.useForm();
   const [listChoice, setListChoice] = useState(['', '', '']);
-  const [state, setState] = useState({});
+  const [created, setCreated] = useState(false);
   const { account, governance } = useContext(ContractContext);
-  const list = [
-    {
-      id: 1,
-      status: 'active',
-      title: 'It suggest to gas volumne',
-      description: 'End in 6 month',
-    },
-    {
-      id: 2,
-      status: 'closed',
-      title: 'It suggest to gas volumne',
-      description: 'End in 6 month',
-    },
-    {
-      id: 3,
-      status: 'pending',
-      title: 'It suggest to gas volumne',
-      description: 'End in 6 month',
-    },
-  ];
-
-  const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
-  };
+  const spaceId = props.match.params.id;
+  const space = props.location.state.space;
+  const to =  {
+    pathname: `/space/${spaceId}`,
+    state: {space}
+  }
 
   const removeChoice = index => {
     const fixList = listChoice.filter((item, indexItem) => indexItem !== index);
-    console.log(fixList, index);
     setListChoice(fixList);
   };
 
@@ -56,14 +37,14 @@ function CreateProposalPage(props) {
   };
 
   const createProposal = async values => {
-    const test = listChoice.map((item, index) => values[`add-choice-${index}`]);
+    const choices = listChoice.map((item, index) => values[`add-choice-${index}`]);
     const submitValue = {
       startTime: values.dateStart,
       endTime: values.dateEnd,
       description: values.description,
       title: values.question,
       blockNumber: 123,
-      choices: test,
+      choices: choices,
     };
     let id = Web3.utils.randomHex(32);
 
@@ -82,7 +63,6 @@ function CreateProposalPage(props) {
     };
 
     const result = await fleek.upload(input);
-    let spaceId = props.match.params.id;
     governance.methods
       .newProposal(
         spaceId,
@@ -91,16 +71,23 @@ function CreateProposalPage(props) {
         moment(values.dateStart).unix(),
         moment(values.dateEnd).unix(),
         123,
-        test.length,
+        choices.length,
       )
       .send({ from: account })
-      .then(r => {
-        console.log('r:', r);
-        console.log('hash:', result.hash);
-      });
+      .on('receipt', () => {
+        setCreated(true);
+      })
+      .on('error', (error, receipt) => {
+        window.alert(error);
+      })
   };
 
-  return (
+  const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+  };
+
+  return created ? <Redirect to={to} /> : (
     <>
       <div className="create-proposal-page">
         <Form

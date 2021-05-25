@@ -20,7 +20,7 @@ const VoteList = props => {
         {voteList &&
           voteList.map((item, index) => (
             <div className="vote-list__item" key={index}>
-              <UsualButton text={item.title} width="100%" />
+              <UsualButton text={item} width="100%" />
             </div>
           ))}
         <div className="vote-list__item-vote">

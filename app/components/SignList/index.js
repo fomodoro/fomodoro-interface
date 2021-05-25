@@ -13,7 +13,7 @@ const SignList = props => {
       >
         Vote
       </Heading>
-      <Pill color="primary">100</Pill>
+      <Pill color="primary">{userList.length}</Pill>
     </div>
   );
   const SignListBody = () => (
