@@ -2,6 +2,7 @@ import React from 'react';
 import { Pill, Heading, Blockie } from 'rimble-ui';
 import TableList from '../TableList/index';
 import './SignList.css';
+import { Empty } from 'antd';
 
 const SignList = props => {
   const { userList } = props;
@@ -18,7 +19,7 @@ const SignList = props => {
   );
   const SignListBody = () => (
     <>
-      {userList &&
+      {userList && userList.length > 0 ? (
         userList.map((item, index) => (
           <div className="sign-list__item" key={index}>
             <div className="sign-list__item--address">
@@ -40,7 +41,10 @@ const SignList = props => {
             <div className="sign-list__item--vote">{item.vote}</div>
             <div className="sign-list__item--power">{item.power}</div>
           </div>
-        ))}
+        ))
+      ) : (
+        <Empty />
+      )}
     </>
   );
   return (

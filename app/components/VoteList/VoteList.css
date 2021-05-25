@@ -1,5 +1,6 @@
 .vote-list__body {
     padding: 12px;
+    width: 100%;
 }
 .vote-list__item {
     margin-bottom: 10px;

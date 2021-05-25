@@ -2,6 +2,7 @@ import React from 'react';
 import { Pill, Heading, Blockie, Progress } from 'rimble-ui';
 import TableList from '../TableList/index';
 import './ProgressList.css';
+import { Empty } from 'antd';
 
 const ProgressList = props => {
   const { progressList } = props;
@@ -17,7 +18,7 @@ const ProgressList = props => {
   );
   const ProgressListBody = () => (
     <>
-      {progressList &&
+      {progressList && progressList.length > 0 ? (
         progressList.map((item, index) => (
           <>
             <div className="progress-list__item-wrapper">
@@ -36,7 +37,10 @@ const ProgressList = props => {
               </div>
             </div>
           </>
-        ))}
+        ))
+      ) : (
+        <Empty />
+      )}
     </>
   );
   return (

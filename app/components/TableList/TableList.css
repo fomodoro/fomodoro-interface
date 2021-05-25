@@ -1,7 +1,7 @@
 .table-list {
     border: 1px solid #d1d5da;
     border-radius: 10px;
-   
+   width: 100%;
 }
 
 .table-list__header {
