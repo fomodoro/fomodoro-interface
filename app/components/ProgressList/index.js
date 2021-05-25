@@ -26,12 +26,12 @@ const ProgressList = props => {
                 <div className="progress-list__item--vote">{item.vote}</div>
                 <div className="progress-list__item--power">{item.power}</div>
                 <div className="progress-list__item--percent">
-                  {item.percent}%
+                  {Number(item.percent)}%
                 </div>
               </div>
               <div className="progress-list__progress" key={index}>
                 <Progress
-                  value={item.percent / 100}
+                  value={Number(item.percent) / 100}
                   style={{ width: '100%' }}
                 />
               </div>
